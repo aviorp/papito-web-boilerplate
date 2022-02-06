@@ -1,0 +1,9 @@
+version: "3.9"  # optional since v1.27.0
+services:
+ server:
+  container_name: server
+  restart: always
+  image: aviorp/node-ts-server
+  env_file: ./.env
+  ports:
+     - 80:3300

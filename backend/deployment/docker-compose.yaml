@@ -1,0 +1,16 @@
+version: "3.9"  # optional since v1.27.0
+services:
+ server:
+  image: node-ts-server
+  container_name: server
+  restart: always
+  build: ../
+  env_file: ./.env.dev
+  ports:
+     - 80:3300
+ db:
+   container_name: mongodb
+   restart: always
+   image: mongo
+   ports:
+     - 27017:27017
