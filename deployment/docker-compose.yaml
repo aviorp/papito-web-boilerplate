@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  backend:
+    container_name: backend
+    restart: always
+    build: ../backend  
+    env_file: ../backend/deployment/.env.dev
+    ports:
+      - 3300:3300
+  frontend:
+    container_name: frontend
+    restart: always
+    build: ../frontend
+    ports:
+      - 8080:80
+      - 443:443
+    depends_on:
+      - backend
+  

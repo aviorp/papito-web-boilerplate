@@ -1,0 +1,218 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$grey-1: #f3f5f9;
+$grey-2: #dadadb;
+$grey-3: #f2f2f2;
+$grey-4: #45596c;
+$grey-5: #405a75;
+$grey-6: #07242d;
+$grey-7: #303030;
+$grey-8: #c9c9c9;
+$grey-9: #e5e5e5;
+$grey-10: #fefefe;
+$blue-1: #ebf3fa;
+$blue-2: #eefafc;
+$blue-3: #f9fbfd;
+$blue-4: #08b1d5;
+$blue-5: #9fb7f3;
+$blue-6: #f9fcfe;
+$blue-7: #001eff;
+$blue-8: #1904da;
+$blue-9: #08b1d5;
+$blue-13: #142963;
+$blue-14: #183278;
+$blue-15: #f2f4ff;
+$blue-16: #ebf3fb;
+$blue-17: #f1f7fb;
+$green-3: #21d048;
+$green-4: #18eaa7;
+$red-2: #fff2f4;
+$yellow-1: #fff7f3;
+$primary: #2b6777;
+$secondary: #9ad6eb;
+$accent: #0d819b;
+$dark: #07242d;
+$positive: #21d048;
+$negative: #ff445f;
+$warning: #ff8e50;
+$white: #fff;
+$critical: #bb0505;
+$high: #ff445f;
+$medium: #ff8e50;
+$low: #ffbf50;
+$negligible: #ffc900;
+$info: #dadadb;
+$disabled: #99a1aa;
+$hover: #e5fffc;
+$malware: #281a52;
+$sensitive: #7b62c2;
+$critical-light: #ecd9e2;
+$high-light: #f9d9d9;
+$medium-light: #ffe8d4;
+$low-light: #fce9b4;
+$neg-light: #f6f6f6;
+$ok-light: #b7dfb9;
+$malware-light: #88809e;
+$sensitive-light: #ad9ed7;
+
+$input-label-color: $grey-4;
+
+$space-base: 16px !default;
+$space-x-base: $space-base !default;
+$space-y-base: $space-base !default;
+
+$space-none: (
+  x: 0,
+  y: 0
+) !default;
+$space-4xs: (
+  x: (
+    1px
+  ),
+  y: (
+    1px
+  )
+) !default;
+$space-3xs: (
+  x: (
+    $space-x-base * 0.25
+  ),
+  y: (
+    $space-y-base * 0.25
+  )
+) !default;
+$space-2xs: (
+  x: (
+    $space-x-base * 0.5
+  ),
+  y: (
+    $space-y-base * 0.5
+  )
+) !default;
+$space-xs: (
+  x: (
+    $space-x-base * 0.625
+  ),
+  y: (
+    $space-y-base * 0.625
+  )
+) !default;
+$space-sm: (
+  x: (
+    $space-x-base * 0.75
+  ),
+  y: (
+    $space-y-base * 0.75
+  )
+) !default;
+$space-md: (
+  x: $space-x-base,
+  y: $space-y-base
+) !default;
+$space-lg: (
+  x: (
+    $space-x-base * 1.25
+  ),
+  y: (
+    $space-y-base * 1.25
+  )
+) !default;
+$space-xl: (
+  x: (
+    $space-x-base * 1.5
+  ),
+  y: (
+    $space-y-base * 1.5
+  )
+) !default;
+$space-2xl: (
+  x: (
+    $space-x-base * 2
+  ),
+  y: (
+    $space-y-base * 2
+  )
+) !default;
+$space-3xl: (
+  x: (
+    $space-x-base * 2.25
+  ),
+  y: (
+    $space-y-base * 2.25
+  )
+) !default;
+$space-4xl: (
+  x: (
+    $space-x-base * 3
+  ),
+  y: (
+    $space-y-base * 3
+  )
+) !default;
+
+$spaces: (
+  "none": $space-none,
+  // 1px
+  "4xs": $space-4xs,
+  //4px
+  "3xs": $space-3xs,
+  //8px
+  "2xs": $space-2xs,
+  //10px
+  "xs": $space-xs,
+  //12px
+  "sm": $space-sm,
+  //16px
+  "md": $space-md,
+  //20px
+  "lg": $space-lg,
+  //24px
+  "xl": $space-xl,
+  //32px
+  "2xl": $space-2xl,
+  //36px
+  "3xl": $space-3xl,
+  //48px
+  "4xl": $space-4xl
+) !default;
+
+$text-weights: (
+  thin: 100,
+  extra-light: 200,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  semi-bold: 600,
+  bold: 700,
+  extra-bold: 800,
+  bolder: 900
+) !default;
+
+$size-xs: 0.5625rem; //9px
+$size-sm: 0.6875rem; //11px
+$size-md: 0.8125rem; //13px
+$size-base: 0.9375rem; //15px
+$size-lg: 1.1875rem; //19px
+$size-xl: 1.25rem; //20px
+$size-2xl: 1.5625rem; //25px
+$size-3xl: 1.9375rem; //31px
+$size-4xl: 2.4375rem; //39px
+$size-5xl: 3.125rem; //50px
+$size-6xl: 3.375rem; //54px
+$size-huge: 7.75rem; //124px
+
+$generic-border-radius: 0px !default;
+$button-border-radius: 0px !default;
+$button-push-border-radius: 0 !default;
