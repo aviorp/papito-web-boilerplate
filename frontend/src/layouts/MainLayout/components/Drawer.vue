@@ -22,12 +22,12 @@
       <q-item
         v-for="item in items"
         :key="item.name"
-        :to="{ name: 'test' }"
+        :to="item.route"
         :active="item.name === $route.name"
         clickable
         v-ripple
         exact
-        active-class="bg-red-4"
+        active-class="bg-secondary text-primary"
       >
         <q-item-section avatar>
           <q-icon color="primary" :name="item.icon" />
@@ -59,9 +59,9 @@ export default {
     const { isDrawerOpen, items } = useMenuSettings();
     const { user, logout } = useUserState();
     const { setNotification } = useGeneralStates();
-    const router = useRouter();
+    const $router = useRouter();
     const onLogout = () => {
-      router.push({ name: "login" });
+      $router.push({ name: "login" });
       logout();
       setNotification("Logged out Successfully");
     };
@@ -69,7 +69,8 @@ export default {
       isDrawerOpen,
       items,
       user,
-      onLogout
+      onLogout,
+      $router
     };
   }
 };

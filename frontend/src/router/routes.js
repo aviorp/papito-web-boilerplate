@@ -11,9 +11,9 @@ const routes = [
         component: () => import("pages/Home.vue")
       },
       {
-        path: "/login",
-        name: "login",
-        component: () => import("pages/Login.vue")
+        path: "/settings",
+        name: "settings",
+        component: () => import("pages/Settings.vue")
       }
     ]
   },
@@ -26,11 +26,12 @@ const routes = [
 
   {
     path: "/404",
+    name: "notFound",
     component: () => import("pages/Error404.vue")
   },
   {
     path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
-    redirect: "/404"
+    redirect: { name: "notFound" }
   }
 ];
 

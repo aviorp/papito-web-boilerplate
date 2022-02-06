@@ -1,14 +1,12 @@
 import { computed, ref, watch } from "vue";
 import { Dark } from "quasar";
-const menuItems = ref([
-  { name: "Home", route: { name: "Home" }, icon: "home" },
-  { name: "Settings", route: { name: "About" }, icon: "settings" }
-]);
+import { MENU_ITEMS } from "./composables.constants";
+const menuItems = ref(MENU_ITEMS);
 const menuIsDrawerOpen = ref(true);
 export default () => {
   const items = computed(() => menuItems.value);
   // const title = computed(() => menuTitle.value);
-  const title = ref("Static Title");
+  const title = ref("Title");
   const isDrawerOpen = computed(() => menuIsDrawerOpen.value);
   const isDarkMode = ref(false);
   watch(() => {

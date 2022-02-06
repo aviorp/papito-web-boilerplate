@@ -73,13 +73,13 @@ export default defineComponent({
   name: "login",
   setup() {
     const { login } = useUserState();
-    const { toggleLoading, setNotification } = useGeneralStates();
+    const { showLoading, hideLoading, setNotification } = useGeneralStates();
     const router = useRouter();
     const username = ref("");
     const password = ref("");
 
     const submitForm = () => {
-      toggleLoading();
+      showLoading();
       setTimeout(() => {
         login({
           firstName: "Abioz",
@@ -88,6 +88,7 @@ export default defineComponent({
             "https://i.scdn.co/image/ab67706c0000bebb73ecf178e9cf5eb439f58635",
           isAdmin: true
         });
+        hideLoading();
         setNotification("User Connected.");
         router.push({ name: "home" });
         toggleLoading();

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-xl q-py-lg">
+  <q-page class="q-px-xl q-py-3xl">
     <header class="row items-center justify-between">
       <h4 class="row items-center">
         <slot name="title"></slot>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "PageLayout",
+  name: "PageLayout"
 };
 </script>
 

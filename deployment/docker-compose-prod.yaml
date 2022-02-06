@@ -3,11 +3,13 @@ services:
   backend:
     container_name: backend
     restart: always
+    # replace build with image to bind it on cloud
     build: ../backend  
     env_file: ../backend/deployment/.env
   frontend:
     container_name: frontend
     restart: always
+    # replace build with image to bind it on cloud
     build: ../frontend
     ports:
       - 80:80

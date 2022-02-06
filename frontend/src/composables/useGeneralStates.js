@@ -1,20 +1,15 @@
-import { useQuasar, QSpinnerGears } from "quasar";
-import { ref } from "vue";
+import { useQuasar, QSpinnerBall } from "quasar";
 
-const quasarLoadingState = ref(false);
 const loaderSetting = {
-  spinner: QSpinnerGears,
-  message: "Some important process  is in progress. Hang on..."
+  spinner: QSpinnerBall,
+  message: "Hang on...",
+  spinnerColor: "primary",
+  spinnerSize: 140
 };
 export default () => {
   const $q = useQuasar();
-  const toggleLoading = () => {
-    quasarLoadingState.value = !quasarLoadingState.value;
-    quasarLoadingState.value
-      ? $q.loading.show(loaderSetting)
-      : $q.loading.hide();
-  };
-
+  const showLoading = () => $q.loading.show(loaderSetting);
+  const hideLoading = () => $q.loading.hide();
   const setNotification = (message, type = "success") => {
     $q.notify({
       type,
@@ -25,7 +20,8 @@ export default () => {
   };
 
   return {
-    toggleLoading,
-    setNotification
+    setNotification,
+    showLoading,
+    hideLoading
   };
 };
