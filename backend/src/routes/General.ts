@@ -4,20 +4,24 @@ import { upload } from "../utils/multer";
 const router = express.Router();
 
 /**
- * The api send a message to the user
- *
+ * the Api will send message to redirect to Swagger UI page.
+ * @returns The message.
  */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.status(200).json({message:"Use /swagger to see and try all the entities."});
+    res
+      .status(200)
+      .json({ message: "Use /swagger to see and try all the entities." });
   } catch (error) {
     next(error);
   }
 });
 
 /**
- * The api takes a file and uploading it.
- *
+ * Uploading a file to the server.
+ * @returns The message.
+ * @param file The file to upload.
+ * @param req The request.
  */
 router.post(
   "/upload",
@@ -26,7 +30,7 @@ router.post(
     try {
       res.status(201).send({
         message: "File Uploaded",
-        fileName: req.file?.filename,
+        fileName: req.file?.filename
       });
     } catch (error) {
       next(error);
@@ -34,7 +38,9 @@ router.post(
   }
 );
 /**
- * The api takes a file and send it to the browser.
+ * Downloading a file from the server.
+ * @returns The file.
+ * @param fileName The name of the file to download.
  *
  */
 router.get(
@@ -43,10 +49,10 @@ router.get(
     try {
       res.status(201).send({
         message: "File Uploaded",
-        fileName: req.file?.filename,
+        fileName: req.file?.filename
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       next(error);
     }
   }

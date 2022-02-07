@@ -1,12 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
-import {
-  addUser,
-  getAllUsers,
-  getUserByEmail,
-  updateUser,
-  deleteUser,
-} from "../BL/Users";
-import { BadRequestError, NotFoundError } from "../errorHandlers/index";
+import { UserBL } from "../BL";
+
+import { BadRequestError } from "../errorHandlers/index";
 import { useMiddleware } from "../middlewares/index";
 import Requirements from "../middlewares/requirements";
 
@@ -14,33 +9,28 @@ const router = express.Router();
 
 /**
  * Gets all the users in the api.
- *
  * @returns All The users in the api.
- *
  */
-router.get(
-  "/get-users",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const users = await getAllUsers();
-      if (!users.length) return next(new NotFoundError("Dataset Not found."));
-      res.status(200).send(users);
-    } catch (error: any) {
-      next(new BadRequestError(error));
-    }
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await UserBL.getAll();
+    res.status(200).send(users);
+  } catch (error: any) {
+    next(new BadRequestError(error));
   }
-);
+});
 
 /**
- * The api creates new user
- *
+ * Creates a new user.
+ * @interface UserI,
  */
 router.post(
-  "/add-user",
+  "/",
   useMiddleware(Requirements.userIsNull),
+
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await addUser(req.body);
+      await UserBL.create(req.body);
       return res.status(201).send("User Created");
     } catch (error: any) {
       next(new BadRequestError(error));
@@ -48,43 +38,19 @@ router.post(
   }
 );
 
-/** 
-* Get Speicific User by his Email.
-
-* @returns User By Email.
-
-*/
+/**
+ * Gets a user by id.
+ * @param id The id of the user.
+ * @returns The user with the given id.
+ */
 router.get(
-  "/:email",
+  "/:id",
+  useMiddleware(Requirements.isValidId),
   useMiddleware(Requirements.userExist),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await getUserByEmail(req.params.email);
-      return res.status(200).send(user);
-    } catch (error: any) {
-      next(new BadRequestError(error));
-    }
-  }
-);
-
-/** 
-* update Speicific User by his Email.
-
-* @returns User By Email.
-
-*/
-router.put(
-  "/update-user",
-  useMiddleware(Requirements.userExist),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const user = await getUserByEmail(req.body.email);
-      const updatedUser = {
-        ...user,
-        ...req.params,
-      };
-      const response = await updateUser(updatedUser);
-      return res.status(200).send(response);
+      const user = await UserBL.getById(req.params.id);
+      res.status(200).send(user);
     } catch (error: any) {
       next(new BadRequestError(error));
     }
@@ -92,15 +58,41 @@ router.put(
 );
 
 /**
- * delete Speicific User by his Email.
+ * Updates a user by id.
+ * @param id The id of the user.
+ * @returns The updated user.
  */
-router.delete(
-  "/delete-user",
-  useMiddleware(Requirements.userExist),
+router.put(
+  "/:id",
+  [
+    useMiddleware(Requirements.isValidId),
+    useMiddleware(Requirements.userExist)
+  ],
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await getUserByEmail(req.body.email);
-      await deleteUser(user);
+      await UserBL.update(req.params.id, req.body);
+      return res.status(201).send("User Updated");
+    } catch (error: any) {
+      next(new BadRequestError(error));
+    }
+  }
+);
+
+/**
+ * Deletes a user by id.
+ * @param id The id of the user.
+ * @returns The deleted user.
+ */
+router.delete(
+  "/:id",
+  [
+    useMiddleware(Requirements.userExist),
+    useMiddleware(Requirements.isValidId)
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await UserBL.getById(req.params.id);
+      await UserBL.delete(user);
       return res.status(200).send("User Deleted.");
     } catch (error: any) {
       next(new BadRequestError(error));

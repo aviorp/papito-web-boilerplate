@@ -2,7 +2,7 @@ import Vue from "vue";
 
 //filter converting bytes to KB or MB or GB
 
-Vue.filter("formatBytes", function(bytes, decimals) {
+Vue.filter("formatBytes", function (bytes, decimals) {
   if (bytes === 0) return "0 Bytes";
   if (isNaN(parseInt(bytes))) return bytes;
   if (typeof bytes === "string") bytes = parseInt(bytes);

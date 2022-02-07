@@ -9,6 +9,10 @@ import routesModules from "../routes";
 import db from "../db";
 import cors from "cors";
 
+/**
+ * This Class is responsible for the init and run of the server.
+ * @class HttpService
+ */
 class HttpService {
   app;
   constructor() {
@@ -23,14 +27,12 @@ class HttpService {
 
   use404ErrorHandler() {
     this.app.get("*", (req: Request, res: Response, next: NextFunction) => {
-      // ! ERROR did not return as catch to the front.
-      next(new NotFoundError(`Can't find ${req!.url}`));
+      next(new NotFoundError(`${req.originalUrl} not found`));
     });
-    // return this;
   }
 
   async useRoutes() {
-    this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    this.useSwagger();
     routesModules.forEach(({ path, module }) => {
       this.app.use(path, module);
     });
@@ -39,7 +41,7 @@ class HttpService {
   initApp(port) {
     this.useDefaultMiddlewares();
     const server = this.app.listen(port, () =>
-      console.log(`listening on port ${port}...`)
+      console.log(`Server is running on port ${port}`)
     );
     new Server(server);
   }
@@ -58,9 +60,12 @@ class HttpService {
     this.app.use(
       urlencoded({
         limit: "50mb",
-        extended: true,
+        extended: true
       })
     );
+  }
+  useSwagger() {
+    this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   }
 }
 

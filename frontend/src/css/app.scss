@@ -1,16 +1,16 @@
 // app global css in SCSS form
-
-body,
-html {
-  color: $dark;
-  overflow: hidden;
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+* {
+  font-family: "Inter", sans-serif;
 }
-
 a {
   color: $primary;
   text-decoration: none;
 }
 
+body {
+  background-color: $accent;
+}
 ul {
   padding: 0;
   margin: 0;
@@ -25,25 +25,11 @@ ul {
   background: #c4c4c4;
 }
 
-.modal-content-wrapper {
-  position: absolute;
-  top: 100px;
-  bottom: 100px;
-  left: 250px;
-  right: 60px;
-  overflow: hidden;
-  z-index: 10;
-  height: initial !important;
-  width: initial !important;
-
-  @media only screen and (min-device-width: 1280px) and (max-device-width: 1468px) {
-    top: 50px;
-    bottom: 50px;
-  }
-}
+// box-shadow: -8 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%),
+//   0 1px 18px 0 rgb(0 0 0 / 12%) !important;
+// border-radius: 6px;
 
 @import "./reset";
 @import "./colors";
 @import "./typography";
 @import "./helpers";
-@import "./quasar-variables";

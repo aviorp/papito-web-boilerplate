@@ -6,23 +6,23 @@ export default {
     description: "A Skeleton made for self use.",
     license: {
       name: "MIT",
-      url: "https://opensource.org/licenses/MIT",
-    },
+      url: "https://opensource.org/licenses/MIT"
+    }
   },
-  host: "localhost:3000",
+  host: "localhost:3300",
   basePath: "/",
   tags: [
     {
       name: "Users",
-      description: "API for users in the system",
+      description: "API for users in the system"
     },
     {
       name: "Auth",
-      description: "User Authentications & register.",
-    },
+      description: "User Authentications & register."
+    }
   ],
   paths: {
-    "/users/get-users": {
+    "/users": {
       get: {
         tags: ["Users"],
         summary: "Get all users in the api.",
@@ -30,113 +30,113 @@ export default {
           200: {
             description: "OK",
             schema: {
-              $ref: "#/definitions/Users",
-            },
-          },
-        },
+              $ref: "#/definitions/Users"
+            }
+          }
+        }
       },
-    },
-    "/users/add-user": {
       post: {
         tags: ["Users"],
-        summary: "Create new user in the api.",
-        description: "Create new user in the api.",
+        summary: "Creates a new users in the api.",
+        description:
+          "Creates a new user in the api by username, password, and email.",
         parameters: [
           {
             name: "user",
             in: "body",
-            description: "User that we want to create",
+            description: "User object.",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
+              $ref: "#/definitions/User"
+            }
+          }
         ],
         produces: ["application/json"],
         responses: {
           201: {
-            description: "New user is created",
+            description: "User Created",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
-        },
-      },
+              $ref: "#/definitions/User"
+            }
+          }
+        }
+      }
     },
-    "/users/{email}": {
+    "/users/{id}": {
       get: {
         tags: ["Users"],
-        summary: "Get specific user by his Email.",
+        summary: "Get specific user by his id.",
         parameters: [
           {
-            name: "email",
+            type: "string",
+            name: "id",
             in: "path",
-            description: "Email that we want to search user with.",
+            required: true,
+            description: "User that we want to get, represented by his id.",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
+              $ref: "#/definitions/User"
+            }
+          }
         ],
         responses: {
           200: {
             description: "OK",
             schema: {
-              $ref: "#/definitions/Users",
-            },
-          },
-        },
+              $ref: "#/definitions/Users"
+            }
+          }
+        }
       },
-    },
-    "/users/update-user": {
       put: {
         tags: ["Users"],
-        summary: "Update specific user by his Email.",
+        summary: "Update specific user by his id.",
         parameters: [
           {
-            name: "email",
-            in: "body",
-            description: "Email that we want to search user with.",
-            schema: {
-              $ref: "#/definitions/User",
-            },
+            type: "string",
+            name: "id",
+            in: "path",
+            required: true,
+            description: "User that we want to update, represented by his id."
           },
+          {
+            name: "user",
+            in: "body",
+            description: "User that we want to update",
+            schema: {
+              $ref: "#/definitions/User"
+            }
+          }
         ],
         produces: ["application/json"],
         responses: {
           200: {
             description: "User Updated.",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
-        },
+              $ref: "#/definitions/User"
+            }
+          }
+        }
       },
-    },
-    "/users/delete-user": {
       delete: {
         tags: ["Users"],
-        summary: "delete specific user by his Email.",
+        summary: "delete specific user by his id.",
         parameters: [
           {
-            name: "email",
-            in: "body",
-            description: "Email that we want to delete user with.",
+            name: "id",
+            in: "path",
+            type: "string",
+            description: "ID that we want to delete user with.",
             schema: {
-              type: "object",
-              properties: {
-                email: {
-                  type: "string",
-                },
-              },
-            },
-          },
+              $ref: "#/definitions/User"
+            }
+          }
         ],
         produces: ["application/json"],
         responses: {
           200: {
-            description: "User Deleted.",
-          },
-        },
-      },
+            description: "User Deleted."
+          }
+        }
+      }
     },
     "/auth/register": {
       post: {
@@ -148,20 +148,20 @@ export default {
             in: "body",
             description: "User that we want to create",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
+              $ref: "#/definitions/User"
+            }
+          }
         ],
         produces: ["application/json"],
         responses: {
           201: {
             description: "User Created.",
             schema: {
-              $ref: "#/definitions/User",
-            },
-          },
-        },
-      },
+              $ref: "#/definitions/User"
+            }
+          }
+        }
+      }
     },
     "/auth/login": {
       post: {
@@ -176,59 +176,56 @@ export default {
             schema: {
               type: "object",
               properties: {
-                email: {
-                  type: "string",
+                username: {
+                  type: "string"
                 },
                 password: {
-                  type: "string",
-                },
-              },
-            },
-          },
+                  type: "string"
+                }
+              }
+            }
+          }
         ],
         produces: ["application/json"],
         responses: {
           201: {
-            description: "Valid Token.",
-          },
-        },
-      },
-    },
+            description: "Valid Token."
+          }
+        }
+      }
+    }
   },
   definitions: {
     User: {
       required: ["email", "_id", "password"],
       properties: {
-        email: {
-          type: "string",
-          uniqueItems: true,
+        username: {
+          type: "string"
         },
         password: {
-          type: "string",
+          type: "string"
         },
         firstName: {
-          type: "string",
+          type: "string"
         },
-
         lastName: {
-          type: "string",
+          type: "string"
         },
 
         phone: {
-          type: "string",
+          type: "string"
         },
         image: {
-          type: "string",
-        },
-      },
+          type: "string"
+        }
+      }
     },
     Users: {
       type: "array",
-      $ref: "#/definitions/User",
-    },
+      $ref: "#/definitions/User"
+    }
   },
-
   schemes: ["http"],
   consumes: ["application/json"],
-  produces: ["application/json"],
+  produces: ["application/json"]
 };

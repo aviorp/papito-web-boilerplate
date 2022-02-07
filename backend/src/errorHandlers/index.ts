@@ -29,11 +29,9 @@ export const errorHandler: ErrorRequestHandler = (
   next: NextFunction
 ) => {
   if (err) {
-    return res
-      .status(err.statusCode)
-      .json({ status: err.status, message: err.message }); // Bad request
+    return res.status(400).json({ message: err.message }); // Bad request
   } else {
-    console.log(err);
+    console.error(err);
     res.status(500).send("Server Error.");
   }
   next();

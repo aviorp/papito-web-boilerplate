@@ -4,12 +4,17 @@ import config from "../config";
 import {
   ForbiddenError,
   NotFoundError,
-  UnauthorizedError,
+  UnauthorizedError
 } from "../errorHandlers";
 
+/**
+ * This Class is responsible for the authentication of the user.
+ * @class Auth Middleware Class for the authentication of the user.
+ */
 class Auth {
   /**
    * This function check if user can continue to protected routes.
+   * Fetching the token from the header, and verify it.
    */
   verifyUser(req: Request, res: Response, next: NextFunction) {
     const token = req.header("authorization");
@@ -27,7 +32,7 @@ class Auth {
     });
   }
   /**
-   * This function check if user can continue to protected routes as an admin.
+   * This function check if user can continue to protected routes (Administrators).
    */
   verifyAdmin(req, res, next) {
     const token = req.header("authorization");
@@ -38,10 +43,9 @@ class Auth {
       if (err) {
         return next(new UnauthorizedError("invalid token"));
       } else {
-        if (auth && !auth.isAdmin) {
-          return next(new ForbiddenError("this user is not an admin"));
+        if (!auth?.isAdmin) {
+          return next(new ForbiddenError("user not authorized"));
         }
-        console.log(auth);
         next();
       }
     });

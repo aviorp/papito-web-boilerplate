@@ -21,6 +21,6 @@
 
 <script>
 export default {
-  name: "SectionLayout",
+  name: "SectionLayout"
 };
 </script>
