@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import Requirements from "../middlewares/requirements";
 import { useMiddleware } from "../middlewares";
-import { register, login } from "../BL/Auth";
 import { BadRequestError } from "../errorHandlers";
+import { AuthBL } from "../BL";
+import { UserI } from "../interfaces";
 const router = express.Router();
 
 /**
@@ -14,7 +15,7 @@ router.post(
   useMiddleware(Requirements.userIsNull),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await register(req.body);
+      await AuthBL.register(req.body);
       return res.status(201).send("User Created.");
     } catch (error: any) {
       next(new BadRequestError(error));
@@ -32,11 +33,18 @@ router.post(
   "/login",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password } = req.body;
-      const response = await login(email, password);
-      return res.status(201).send(response);
+      const { username, password } = req.body;
+      if (!username || !password) {
+        throw new Error();
+      }
+      const token = await AuthBL.login(username, password);
+      if (!token) {
+        console.log("here");
+        throw new Error();
+      }
+      return res.status(201).json(token);
     } catch (error: any) {
-      next(new BadRequestError(error));
+      next(new BadRequestError("Username or Password Are Invalid."));
     }
   }
 );

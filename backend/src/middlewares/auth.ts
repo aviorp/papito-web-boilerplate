@@ -4,7 +4,7 @@ import config from "../config";
 import {
   ForbiddenError,
   NotFoundError,
-  UnauthorizedError,
+  UnauthorizedError
 } from "../errorHandlers";
 
 class Auth {
@@ -39,7 +39,7 @@ class Auth {
         return next(new UnauthorizedError("invalid token"));
       } else {
         if (auth && !auth.isAdmin) {
-          return next(new ForbiddenError("this user is not an admin"));
+          return next(new ForbiddenError("user not authorized"));
         }
         console.log(auth);
         next();

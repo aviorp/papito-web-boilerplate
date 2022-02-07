@@ -7,13 +7,13 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     callback(null, file.originalname);
-  },
+  }
 });
 
 //create the middleware
 export const upload = multer({
   storage,
   limits: {
-    fieldSize: 1024 * 1024 * 3,
-  },
+    fieldSize: 1024 * 1024 * 3
+  }
 });

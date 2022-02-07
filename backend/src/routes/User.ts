@@ -1,11 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
-import {
-  addUser,
-  getAllUsers,
-  getUserByEmail,
-  updateUser,
-  deleteUser,
-} from "../BL/Users";
+import { UserBL } from "../BL";
+
 import { BadRequestError, NotFoundError } from "../errorHandlers/index";
 import { useMiddleware } from "../middlewares/index";
 import Requirements from "../middlewares/requirements";
@@ -18,29 +13,25 @@ const router = express.Router();
  * @returns All The users in the api.
  *
  */
-router.get(
-  "/get-users",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const users = await getAllUsers();
-      if (!users.length) return next(new NotFoundError("Dataset Not found."));
-      res.status(200).send(users);
-    } catch (error: any) {
-      next(new BadRequestError(error));
-    }
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await UserBL.getAll();
+    res.status(200).send(users);
+  } catch (error: any) {
+    next(new BadRequestError(error));
   }
-);
+});
 
 /**
  * The api creates new user
  *
  */
 router.post(
-  "/add-user",
+  "/",
   useMiddleware(Requirements.userIsNull),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await addUser(req.body);
+      await UserBL.create(req.body);
       return res.status(201).send("User Created");
     } catch (error: any) {
       next(new BadRequestError(error));
@@ -55,11 +46,11 @@ router.post(
 
 */
 router.get(
-  "/:email",
+  "/:id",
   useMiddleware(Requirements.userExist),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await getUserByEmail(req.params.email);
+      const user = await UserBL.getByUsername(req.params.username);
       return res.status(200).send(user);
     } catch (error: any) {
       next(new BadRequestError(error));
@@ -68,22 +59,22 @@ router.get(
 );
 
 /** 
-* update Speicific User by his Email.
+* update Speicific User by his id.
 
-* @returns User By Email.
+* @returns User By id.
 
 */
 router.put(
-  "/update-user",
+  "/:id",
   useMiddleware(Requirements.userExist),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await getUserByEmail(req.body.email);
+      const user = await UserBL.getById(req.params.id);
       const updatedUser = {
         ...user,
-        ...req.params,
+        ...req.params
       };
-      const response = await updateUser(updatedUser);
+      const response = await UserBL.update(updatedUser);
       return res.status(200).send(response);
     } catch (error: any) {
       next(new BadRequestError(error));
@@ -92,15 +83,15 @@ router.put(
 );
 
 /**
- * delete Speicific User by his Email.
+ * delete Speicific User by his id.
  */
 router.delete(
-  "/delete-user",
+  "/:id",
   useMiddleware(Requirements.userExist),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await getUserByEmail(req.body.email);
-      await deleteUser(user);
+      const user = await UserBL.getById(req.params.id);
+      await UserBL.delete(user);
       return res.status(200).send("User Deleted.");
     } catch (error: any) {
       next(new BadRequestError(error));

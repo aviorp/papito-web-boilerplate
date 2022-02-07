@@ -1,36 +1,56 @@
 <template>
-  <q-layout view="hHh LpR lFf">
+  <q-layout view="lHh hpR lFr">
     <drawer />
-    <q-header elevated class="bg-white text-primary">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleMenu" />
-        <q-toolbar-title>
-          <!-- <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar> -->
-          {{ title }}
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+    <app-header />
     <q-page-container>
-      <router-view />
+      <q-ajax-bar
+        ref="bar"
+        position="top"
+        color="accent"
+        size="7px"
+        skip-hijack
+      />
+      <q-scroll-area
+        style="height: 1280px; max-height: 100vh"
+        @scroll="onScroll"
+      >
+        <router-view />
+      </q-scroll-area>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import useMenuSettings from "@/composables/useMenuSettings";
+import { useMenuState, useUserState } from "@/composables";
 import Drawer from "./components/Drawer.vue";
+import AppHeader from "./components/AppHeader.vue";
+import { onMounted, ref } from "vue";
+import { getPropFromToken } from "@/utils";
 export default {
   components: {
+    AppHeader,
     Drawer
   },
   setup() {
-    const { title, toggleMenu, isDarkMode } = useMenuSettings();
+    const { isDarkMode } = useMenuState();
+    const { user } = useUserState();
+    const bar = ref(true);
+    onMounted(() => {
+      if (localStorage.token) {
+        user.value = getPropFromToken();
+      }
+    });
+    const onScroll = ({ verticalPosition }) => {
+      // if (verticalPosition > 100) {
+      //   toolbarBehavior.hide = true;
+      // } else {
+      //   toolbarBehavior.hide = false;
+      // }
+    };
     return {
-      title,
-      toggleMenu,
-      isDarkMode
+      bar,
+      isDarkMode,
+      onScroll
     };
   }
 };

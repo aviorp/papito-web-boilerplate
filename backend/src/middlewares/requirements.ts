@@ -4,17 +4,17 @@ import { Request, Response, NextFunction } from "express";
 
 class Requirements {
   async userIsNull(req: Request, res: Response, next: NextFunction) {
-    const user = await UserService.getUserByEmail(
-      req.body.email || req.params.email
+    const user = await UserService.getByUsername(
+      req.body.username || req.params.username
     );
-    if (user) return next(new UnauthorizedError("User is already exist."));
+    if (user) return next(new UnauthorizedError("User is exist."));
     next();
   }
   async userExist(req: Request, res: Response, next: NextFunction) {
-    const user = await UserService.getUserByEmail(
-      req.body.email || req.params.email
+    const user = await UserService.getByUsername(
+      req.body.username || req.params.username
     );
-    if (!user) return next(new UnauthorizedError("User Not Found."));
+    if (!user) return next(new UnauthorizedError("User is not exist."));
     next();
   }
 }

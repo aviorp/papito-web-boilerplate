@@ -1,6 +1,6 @@
 export interface UserI {
   _id: string;
-  email: string;
+  username: string;
   password?: string;
   firstName: string;
   lastName: string;
@@ -11,6 +11,6 @@ export interface UserI {
 }
 
 export interface Error {
-  message: string,
-  status?:string,
+  message: string;
+  statusCode?: string;
 }

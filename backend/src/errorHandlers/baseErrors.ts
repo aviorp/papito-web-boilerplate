@@ -1,12 +1,12 @@
-
 class ApplicationError extends Error {
   get name() {
     return this.constructor.name;
   }
+  public message: string;
 
-  constructor(message:string, options = {}) {
+  constructor(message: string, options = {}) {
     super(message);
-
+    this.message = message;
     for (const [key, value] of Object.entries(options)) {
       this[key] = value;
     }

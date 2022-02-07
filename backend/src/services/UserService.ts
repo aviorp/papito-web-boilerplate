@@ -2,24 +2,24 @@ import User from "../db/models/User";
 import { UserI } from "../interfaces/index";
 
 class UserService {
-  getUsers(isAdmin: boolean) {
+  getAll(isAdmin: boolean) {
     return isAdmin
       ? User.find({})
       : User.find({}).select(["-isAdmin", "-password"]);
   }
-  getUserById(id: string) {
+  getById(id) {
     return User.findById(id);
   }
-  getUserByEmail(email: string) {
-    return User.findOne({ email });
+  getByUsername(username) {
+    return User.findOne({ username });
   }
-  addUser(newUser: UserI) {
+  create(newUser: UserI) {
     return User.create(newUser);
   }
-  updateUser(user) {
-    return User.updateOne({ email: user.email }, ...user);
+  update(user) {
+    return User.updateOne({ id: user._id }, ...user);
   }
-  deleteUser({ _id }: UserI) {
+  delete({ _id }: UserI) {
     return User.deleteOne({ _id: _id });
   }
 }

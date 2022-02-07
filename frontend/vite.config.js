@@ -12,6 +12,9 @@ export default defineConfig({
       sassVariables: "src/css/quasar-variables.scss"
     })
   ],
+  css: {
+    postcss: "./postcss.config.js"
+  },
   server: {
     proxy: {
       "/api": {
@@ -24,7 +27,7 @@ export default defineConfig({
     alias: {
       "@": `${path.resolve(__dirname, "src")}`,
       pages: `${path.resolve(__dirname, "src")}/pages`,
-      components: `${path.resolve(__dirname, "src")}/pages`
+      components: `${path.resolve(__dirname, "src")}/components`
     }
   }
 });

@@ -9,7 +9,9 @@ const router = express.Router();
  */
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.status(200).json({message:"Use /swagger to see and try all the entities."});
+    res
+      .status(200)
+      .json({ message: "Use /swagger to see and try all the entities." });
   } catch (error) {
     next(error);
   }
@@ -26,7 +28,7 @@ router.post(
     try {
       res.status(201).send({
         message: "File Uploaded",
-        fileName: req.file?.filename,
+        fileName: req.file?.filename
       });
     } catch (error) {
       next(error);
@@ -43,7 +45,7 @@ router.get(
     try {
       res.status(201).send({
         message: "File Uploaded",
-        fileName: req.file?.filename,
+        fileName: req.file?.filename
       });
     } catch (error) {
       console.log(error);

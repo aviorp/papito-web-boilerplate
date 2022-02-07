@@ -5,5 +5,5 @@ import User from "./User";
 export default [
   { path: "/", module: General },
   { path: "/auth", module: Auth },
-  { path: "/users", module: User },
+  { path: "/users", module: User }
 ];

@@ -28,6 +28,7 @@ export const errorHandler: ErrorRequestHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  // res.send(err);
   if (err) {
     return res
       .status(err.statusCode)
@@ -36,5 +37,4 @@ export const errorHandler: ErrorRequestHandler = (
     console.log(err);
     res.status(500).send("Server Error.");
   }
-  next();
 };

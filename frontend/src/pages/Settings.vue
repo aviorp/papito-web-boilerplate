@@ -1,6 +1,5 @@
 <template>
   <page-layout>
-    <template #title>Settings</template>
     <section-layout>
       <template #title>General Settings</template>
       <q-list>
@@ -22,7 +21,7 @@
 <script>
 import PageLayout from "@/layouts/PageLayout.vue";
 import SectionLayout from "@/layouts/SectionLayout.vue";
-import useMenuSettings from "@/composables/useMenuSettings";
+import { useMenuState } from "@/composables";
 export default {
   name: "Settings",
   components: {
@@ -30,7 +29,7 @@ export default {
     SectionLayout
   },
   setup() {
-    const { isDarkMode } = useMenuSettings();
+    const { isDarkMode } = useMenuState();
 
     const triggerLoading = () => {
       showLoading();

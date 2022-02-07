@@ -1,6 +1,5 @@
-import { computed, ref } from "vue";
-
-const userState = ref({
+import { ref } from "vue";
+const user = ref({
   firstName: "Abigzoz",
   lastName: "Flitzerman",
   image: "https://cdn.quasar.dev/img/avatar.png",
@@ -8,18 +7,18 @@ const userState = ref({
 });
 
 export default () => {
-  const user = computed(() => userState.value);
-  const login = payload => (userState.value = payload);
-  const logout = () =>
-    (userState.value = {
+  const logout = () => {
+    user.value = {
       firstName: null,
       lastName: null,
       image: null,
       isAdmin: false
-    });
+    };
+    localStorage.removeItem("token");
+  };
+
   return {
     user,
-    login,
     logout
   };
 };

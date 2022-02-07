@@ -1,17 +1,18 @@
 import { createApp } from "vue";
 import { Quasar, Loading, LoadingBar, Notify } from "quasar";
 // import quasarLang from "quasar/lang/he";
-import quasarIconSet from "quasar/icon-set/svg-material-icons";
+import iconSet from "quasar/icon-set/fontawesome-v6";
+
 import router from "./router";
 // Import icon libraries
 import "@quasar/extras/material-icons/material-icons.css";
 import "@quasar/extras/material-icons-outlined/material-icons-outlined.css";
 import "@quasar/extras/material-icons-round/material-icons-round.css";
 import "@quasar/extras/material-icons-sharp/material-icons-sharp.css";
-import "@quasar/extras/fontawesome-v5/fontawesome-v5.css";
-import "@quasar/extras/ionicons-v4/ionicons-v4.css";
-import "@quasar/extras/eva-icons/eva-icons.css";
-import "@quasar/extras/line-awesome/line-awesome.css";
+import "@quasar/extras/fontawesome-v6/fontawesome-v6.css";
+// import "@quasar/extras/ionicons-v4/ionicons-v4.css";
+// import "@quasar/extras/eva-icons/eva-icons.css";
+// import "@quasar/extras/line-awesome/line-awesome.css";
 
 // A few examples for animations from Animate.css:
 import "@quasar/extras/animate/fadeIn.css";
@@ -34,7 +35,7 @@ myApp.use(Quasar, {
     Notify
   }, // import Quasar plugins and add here
   // lang: quasarLang,
-  iconSet: quasarIconSet
+  iconSet
   /*
   config: {
     brand: {
@@ -49,5 +50,4 @@ myApp.use(Quasar, {
   */
 });
 
-// Assumes you have a <div id="app"></div> in your index.html
 myApp.mount("#app");
