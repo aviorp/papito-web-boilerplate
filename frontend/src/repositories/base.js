@@ -28,6 +28,26 @@ class BaseApiRepository {
       }
     );
   }
+  async getAll() {
+    const { data } = await this.api.get(`${this.endpoint}`);
+    return data;
+  }
+  async getOne(id) {
+    const { data } = await this.api.get(`${this.endpoint}/${id}`);
+    return data;
+  }
+  async create(payload) {
+    const { data } = await this.api.post(`${this.endpoint}`, payload);
+    return data;
+  }
+  async update(id, payload) {
+    const { data } = await this.api.put(`${this.endpoint}/${id}`, payload);
+    return data;
+  }
+  async delete(id) {
+    const { data } = await this.api.delete(`${this.endpoint}/${id}`);
+    return data;
+  }
 }
 
 export default BaseApiRepository;

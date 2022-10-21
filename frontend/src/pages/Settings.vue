@@ -22,6 +22,7 @@
 import PageLayout from "@/layouts/PageLayout.vue";
 import SectionLayout from "@/layouts/SectionLayout.vue";
 import { useMenuState } from "@/composables";
+import { UserRepository } from "@/repositories";
 export default {
   name: "Settings",
   components: {
@@ -30,16 +31,24 @@ export default {
   },
   setup() {
     const { isDarkMode } = useMenuState();
-
     const triggerLoading = () => {
       showLoading();
       setTimeout(() => {
         hideLoading();
       }, 3000);
     };
+    const getUsers = async () => {
+      try {
+        const users = await UserRepository.getUsers();
+        console.log(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     return {
       isDarkMode,
-      triggerLoading
+      triggerLoading,
+      getUsers
     };
   }
 };
