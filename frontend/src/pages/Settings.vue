@@ -7,7 +7,7 @@
           Set Dark Mode
           <q-item-section>
             <q-toggle
-              v-model="isDarkMode"
+              v-model="darkMode"
               checked-icon="plus"
               unchecked-icon="sunny"
             />
@@ -21,8 +21,7 @@
 <script>
 import PageLayout from "@/layouts/PageLayout.vue";
 import SectionLayout from "@/layouts/SectionLayout.vue";
-import { useMenuState } from "@/composables";
-import { UserRepository } from "@/repositories";
+import { useThemeState } from "@/composables";
 export default {
   name: "Settings",
   components: {
@@ -30,25 +29,10 @@ export default {
     SectionLayout
   },
   setup() {
-    const { isDarkMode } = useMenuState();
-    const triggerLoading = () => {
-      showLoading();
-      setTimeout(() => {
-        hideLoading();
-      }, 3000);
-    };
-    const getUsers = async () => {
-      try {
-        const users = await UserRepository.getUsers();
-        console.log(users);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    const { darkMode } = useThemeState();
+
     return {
-      isDarkMode,
-      triggerLoading,
-      getUsers
+      darkMode
     };
   }
 };

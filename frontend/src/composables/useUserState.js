@@ -1,24 +1,43 @@
-import { ref } from "vue";
-const user = ref({
-  firstName: "Abigzoz",
-  lastName: "Flitzerman",
-  image: "https://cdn.quasar.dev/img/avatar.png",
-  isAdmin: true
-});
+import { computed } from "vue";
+import { STORAGE_KEYS } from "@/common/constants";
+import { getPropFromToken } from "@/common/utils";
 
 export default () => {
-  const logout = () => {
-    user.value = {
-      firstName: null,
-      lastName: null,
-      image: null,
-      isAdmin: false
-    };
-    localStorage.removeItem("token");
+  /**
+   * @utility  functions
+   *  @description Utility functions to get the user data
+   */
+  const removeToken = () => {
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
   };
+  const setToken = token => {
+    localStorage.setItem(STORAGE_KEYS.TOKEN, token);
+  };
+  /**
+   * @Computed functions
+   */
+  const user = computed(() =>
+    localStorage[STORAGE_KEYS.TOKEN]
+      ? getPropFromToken()
+      : {
+          firstName: "",
+          lastName: "",
+          image: "",
+          isAdmin: false
+        }
+  );
+  const fullName = computed(
+    () => `${user.value.firstName} ${user.value.lastName}`
+  );
+  const isAdmin = computed(() => user.value.isAdmin);
+  const userImage = computed(() => user.value.image);
 
   return {
     user,
-    logout
+    fullName,
+    isAdmin,
+    userImage,
+    removeToken,
+    setToken
   };
 };

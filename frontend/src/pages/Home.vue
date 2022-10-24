@@ -36,21 +36,16 @@
 
     <section-layout>
       <template #title>Dummy Table View</template>
-      <q-table
-        class="q-my-lg q-mx-auto full-width shadow-10"
-        square
-        :columns="columns"
-        :rows="rows"
-      />
+      <q-table class="q-my-lg q-mx-auto full-width shadow-10" square />
     </section-layout>
   </page-layout>
 </template>
 
 <script>
-import { ref } from "vue";
 import PageLayout from "@/layouts/PageLayout.vue";
 import SectionLayout from "@/layouts/SectionLayout.vue";
-import useUserState from "@/composables/useUserState";
+import { useMenuState, useUserState } from "@/composables";
+import { onMounted } from "vue";
 
 export default {
   name: "Home",
@@ -59,99 +54,15 @@ export default {
     SectionLayout
   },
   setup() {
-    const columns = ref([
-      {
-        name: "origin",
-        align: "center",
-        label: "title",
-        field: "origin",
-        sortable: true
-      },
-      {
-        name: "destination",
-        align: "center",
-        label: "title",
-        field: "destination",
-        sortable: true
-      },
-      {
-        name: "fromDate",
-        align: "center",
-        label: "title",
-        field: "fromDate",
-        format: val => `${formatDate(val, "DD/MM/YYYY")}`,
-        sortable: true
-      },
-      {
-        name: "toDate",
-        align: "center",
-        label: "title",
-        field: "toDate",
-        sortable: true
-      },
-      {
-        name: "fromTime",
-        align: "center",
-        label: "title",
-        field: "fromTime",
-        sortable: true
-      },
-      {
-        name: "toTime",
-        align: "center",
-        label: "title",
-        field: "toTime",
-        sortable: true
-      },
-      {
-        name: "numberOfSeats",
-        align: "center",
-        label: "title",
-        field: "numberOfSeats",
-        sortable: true
-      },
-      {
-        name: "vehicleType",
-        align: "center",
-        label: "title",
-        field: "vehicleType",
-        sortable: true
-      },
-      {
-        name: "contactName",
-        align: "center",
-        label: "title",
-        field: "contactName",
-        sortable: true
-      },
-      {
-        name: "contactPhone",
-        align: "center",
-        label: "title",
-        field: "contactPhone",
-        sortable: true
-      },
-      {
-        name: "isPermanent",
-        align: "center",
-        label: "title",
-        field: "isPermanent",
-        sortable: true
-      },
-      {
-        name: "status",
-        align: "center",
-        label: "title",
-        field: "isActive",
-        sortable: true
-      }
-    ]);
-    const rows = ref([]);
     const { user } = useUserState();
+    const { title } = useMenuState();
+    onMounted(() => {
+      title.value = "Dashboard";
+    });
+
     return {
-      rows,
-      columns,
-      user
+      user,
+      title
     };
   }
 };

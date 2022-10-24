@@ -1,7 +1,7 @@
 // app global css in SCSS form
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-* {
-  font-family: "Inter", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+*:not(.q-icon) {
+  font-family: "Rubik", sans-serif !important;
 }
 a {
   color: $primary;

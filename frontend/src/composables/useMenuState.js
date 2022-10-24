@@ -1,22 +1,35 @@
 import { computed, ref, watch } from "vue";
-import { Dark } from "quasar";
 import { MENU_ITEMS } from "./composables.constants";
 
+/**
+ * @ref variables
+ */
 const menuIsDrawerOpen = ref(true);
-const isDarkMode = ref(false);
 const title = ref("Title");
+const topBarSearch = ref("");
 export default () => {
+  /**
+   * @Computed functions
+   */
   const items = computed(() => MENU_ITEMS);
   const isDrawerOpen = computed(() => menuIsDrawerOpen.value);
-  watch(isDarkMode, () => {
-    Dark.set(isDarkMode.value);
-  });
+  /**
+   * @Watch functions
+   */
+
+  watch(
+    title,
+    () => {
+      document.title = `Papito Web Boilderplate | ${title.value}`;
+    },
+    { immediate: true }
+  );
   const toggleMenu = () => (menuIsDrawerOpen.value = !menuIsDrawerOpen.value);
   return {
     items,
     title,
     isDrawerOpen,
-    isDarkMode,
+    topBarSearch,
     toggleMenu
   };
 };

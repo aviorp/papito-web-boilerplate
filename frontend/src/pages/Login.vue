@@ -6,14 +6,18 @@
     >
       <q-card-section>
         <q-avatar size="103px" class="absolute-center shadow-10">
-          <img src="@/assets/male_avatar.svg" alt="avatar" />
+          <img src="@/assets/logo.png" alt="avatar" />
         </q-avatar>
       </q-card-section>
       <q-card-section>
         <div class="q-pt-xl column">
           <div class="col ellipsis flex justify-center">
             <h3
-              class="text-h5 text-uppercase q-mt-2xl text-weight-regular text-text"
+              class="
+                text-h5 text-uppercase
+                q-mt-2xl
+                text-weight-regular text-text
+              "
             >
               Sign in
             </h3>
@@ -56,12 +60,12 @@
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserState, useGeneralState } from "@/composables";
-import { AuthRepository } from "@/api";
-import { getPropFromToken } from "@/utils";
+import { AuthRepository } from "@/repositories";
+
 export default defineComponent({
   name: "login",
   setup() {
-    const { user } = useUserState();
+    const { setToken } = useUserState();
     const { showLoading, hideLoading, handleError } = useGeneralState();
     const router = useRouter();
     const username = ref("");
@@ -73,9 +77,8 @@ export default defineComponent({
           username: username.value,
           password: password.value
         });
-        localStorage.token = token;
-        user.value = getPropFromToken();
-        router.push("/");
+        setToken(token);
+        router.push({ name: "home" });
       } catch (error) {
         handleError(error);
       } finally {

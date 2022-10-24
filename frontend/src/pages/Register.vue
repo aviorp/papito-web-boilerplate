@@ -2,11 +2,11 @@
   <q-card>
     <q-card-section>
       <q-avatar size="103px" class="absolute-center shadow-10">
-        <img src="@/assets/male_avatar.svg" alt="avatar" />
+        <img src="@/assets/logo.png" alt="avatar" />
       </q-avatar>
     </q-card-section>
     <q-card-section>
-      <div class="q-pt-xl column">
+      <div class="column">
         <div class="col text-h6 ellipsis flex justify-center">
           <h3 class="text-h5 text-uppercase q-mt-2xl text-weight-regular">
             Sign Up
@@ -15,7 +15,7 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <q-form class="q-gutter-md q-pa-lg q-mb-md" @submit.prevent="submitForm">
+      <q-form class="q-gutter-xs q-pa-lg q-mb-md" @submit.prevent="submitForm">
         <q-input label="Username" v-model="form.username" />
         <q-input label="Password" type="password" v-model="form.password" />
         <q-input label="First Name" v-model="form.firstName" />
@@ -49,8 +49,8 @@
 <script>
 import { reactive } from "vue";
 import { useGeneralState } from "@/composables";
-import { AuthRepository } from "@/api";
-import { toBase64 } from "@/utils";
+import { AuthRepository } from "@/repositories";
+import { toBase64 } from "@/common/utils";
 import { useRouter } from "vue-router";
 export default {
   setup() {
@@ -71,8 +71,11 @@ export default {
         const isValidForm = Object.values(form).some(value => !!value);
         if (!isValidForm)
           return setNotification("Please fill all fields", "negative");
-        form.image = await toBase64(form.image);
-        await AuthRepository.register(form);
+        const payload = {
+          ...form,
+          image: await toBase64(form.image)
+        };
+        await AuthRepository.register(payload);
         setNotification("User Created.");
         $router.push({ name: "login" });
       } catch (error) {
@@ -91,7 +94,10 @@ export default {
 
 <style lang="scss" scoped>
 .q-card {
-  margin: 200px auto 50px auto;
-  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 500px;
 }
 </style>

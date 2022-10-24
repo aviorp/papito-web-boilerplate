@@ -2,7 +2,7 @@ import BaseApiRepository from "./base";
 class AuthRepository extends BaseApiRepository {
   constructor(options = {}) {
     super(options);
-    this.endpoint = "/auth";
+    this.endpoint = "auth";
   }
   async register(payload) {
     const { data } = await this.api.post(`${this.endpoint}/register`, payload);

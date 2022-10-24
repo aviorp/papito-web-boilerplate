@@ -29,7 +29,7 @@ export const errorHandler: ErrorRequestHandler = (
   next: NextFunction
 ) => {
   if (err) {
-    return res.status(400).json({ message: err.message }); // Bad request
+    return res.status(400).json({ errorMessage: err.message }); // Bad request
   } else {
     console.error(err);
     res.status(500).send("Server Error.");

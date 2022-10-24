@@ -14,14 +14,13 @@ const router = express.Router();
  */
 router.post(
   "/register",
-  useMiddleware([Requirements.userExist]),
-
+  useMiddleware(Requirements.userIsNull),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await AuthBL.register(req.body);
       return res.status(201).send("User Created.");
     } catch (error: any) {
-      next(new BadRequestError(error));
+      next(new BadRequestError("Failed to create user."));
     }
   }
 );
@@ -39,6 +38,7 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, password } = req.body;
+
       if (!username || !password) {
         throw new Error("Missing username or password.");
       }

@@ -4,3 +4,8 @@
 .space-bottom > * {
   margin-bottom: 16px;
 }
+
+.scrollable {
+  flex: 1 1 auto;
+  overflow-y: scroll !important;
+}

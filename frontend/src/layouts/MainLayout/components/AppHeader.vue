@@ -1,6 +1,10 @@
 <template>
-  <q-header class="text-secondary bg-accent relative">
-    <q-toolbar elevated>
+  <q-header
+    dark
+    class="bg-dark q-pt-sm q-px-sm fixed-top full-width"
+    :class="{ 'bg-accent': !isDarkMode }"
+  >
+    <q-toolbar>
       <q-btn
         v-if="$q.screen.lt.md"
         dense
@@ -9,55 +13,40 @@
         icon="menu"
         @click="toggleMenu"
       />
-      <q-toolbar-title>
-        {{ title }}
-      </q-toolbar-title>
-      <q-btn flat push no-caps rounded>
-        <q-avatar> <q-img :src="user.image" /></q-avatar>
-        <q-menu class="profile-card" fit anchor="bottom left" self="top left">
-          <q-list padding bordered dense>
-            <q-item>
-              <q-item-section class="items-center space-left justify-between">
-                <div class="row items-center no-wrap">
-                  <q-avatar class="q-mr-md">
-                    <q-img :src="user.image"
-                  /></q-avatar>
-                  <q-item-label>
-                    <q-item-label-title>{{
-                      `${user.firstName} ${user.lastName}`
-                    }}</q-item-label-title>
-                    <q-item-label-subtitle>{{
-                      user.email
-                    }}</q-item-label-subtitle>
-                  </q-item-label>
-                </div>
-              </q-item-section>
-              <q-separator spaced inset="item" />
-            </q-item>
-            <q-separator spaced />
-            <q-item clickable class="row items-center">
-              <q-icon color="primary" name="bluetooth" size="16px" />
-              <q-item-section class="q-ml-xs">List item</q-item-section>
-            </q-item>
-            <q-separator spaced />
-            <q-item clickable class="row items-center" @click="onLogout">
-              <q-icon color="primary" name="logout" size="16px" />
-              <q-item-section class="q-ml-xs">Log out</q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
+      <div class="row items-center no-wrap">
+        <q-toolbar-title class="text-primary q-mr-md">{{
+          title
+        }}</q-toolbar-title>
+
+        <q-input
+          v-model="topBarSearch"
+          placeholder="Search"
+          style="min-width: 500px"
+          class="q-mt-4xs"
+          borderless
+        >
+          <template #prepend>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </div>
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
-import { useMenuState, useUserState, useGeneralState } from "@/composables";
+import {
+  useMenuState,
+  useUserState,
+  useGeneralState,
+  useThemeState
+} from "@/composables";
 export default {
   setup() {
-    const { toggleMenu, title } = useMenuState();
+    const { toggleMenu, title, topBarSearch } = useMenuState();
     const { user, logout } = useUserState();
     const { router } = useGeneralState();
+    const { isDarkMode } = useThemeState();
     const onLogout = async () => {
       router.push({ name: "login" });
       await logout();
@@ -65,17 +54,13 @@ export default {
     return {
       toggleMenu,
       title,
+      topBarSearch,
       user,
+      isDarkMode,
       onLogout
     };
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.profile-card {
-  border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  width: 250px;
-}
-</style>
+<style lang="scss" scoped></style>
