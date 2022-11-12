@@ -3,7 +3,7 @@ import config from "../config";
 import { DatabaseError } from "../errorHandlers/baseErrors";
 
 /**
- * The module reponsobile for all the mongodb connection configuration.
+ * The module responsible for all the mongodb connection configuration.
  *
  * @author Avior
  */
